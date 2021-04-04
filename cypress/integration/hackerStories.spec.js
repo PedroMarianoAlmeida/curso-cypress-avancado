@@ -85,6 +85,7 @@ describe('Hacker Stories', () => {
     const newTerm = 'Cypress'
 
     beforeEach(() => {
+
       cy.intercept({
         method: 'GET',
         pathname: '**/search',
@@ -133,13 +134,13 @@ describe('Hacker Stories', () => {
         cy.get('#search')
           .type(`${newTerm}{enter}`)
 
-        cy.assertLoadingIsShownAndHidden()
+        cy.wait('@getNewTermStories');
 
         cy.get(`button:contains(${initialTerm})`)
           .should('be.visible')
           .click()
 
-        cy.assertLoadingIsShownAndHidden()
+        cy.wait('@getStories'); //O criado lá em cima, que já faz a busca pelo termo inicial
 
         cy.get('.item').should('have.length', 20)
         cy.get('.item')
