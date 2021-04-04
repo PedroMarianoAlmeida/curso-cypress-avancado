@@ -129,6 +129,23 @@ describe('Hacker Stories', () => {
         .should('be.visible')
     })
 
+    //Instrutor retirou esse teste do treinamento pq um usuário não tem como fazer, mas vou deixar =D
+    it('types and submits the form directly', () => {
+      cy.get('form input[type="text"]')
+        .should('be.visible')
+        .clear()
+        .type(newTerm)
+      cy.get('form').submit()
+    
+      // Assertion here
+      cy.wait('@getNewTermStories')
+      
+      cy.get('.item').should('have.length', 20)
+      cy.get('.item')
+        .first()
+        .should('contain', newTerm)
+    })
+
     context('Last searches', () => {
       it('searches via the last searched term', () => {
         cy.get('#search')
@@ -164,7 +181,7 @@ describe('Hacker Stories', () => {
             .type(`${faker.random.word()}{enter}`)
 
           cy.wait('@getRandomStories')
-          
+
         })
 
         cy.get('.last-searches button')
