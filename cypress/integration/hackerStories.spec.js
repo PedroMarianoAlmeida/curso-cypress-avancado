@@ -79,6 +79,7 @@ describe('Hacker Stories', () => {
       cy.intercept(
         'GET',
         `**/search?query=${initialTerm}&page=0`,
+        {fixture: 'stories'}
       ).as('getStoriesMockAPI')
   
       cy.intercept({
@@ -103,12 +104,12 @@ describe('Hacker Stories', () => {
       // TODO: Find a way to test it out.
       it.skip('shows the right data for all rendered stories', () => { })
   
-      it('shows only nineteen stories after dimissing the first story', () => {
+      it('shows one less story after dimissing the first one', () => {
         cy.get('.button-small')
           .first()
           .click()
   
-        cy.get('.item').should('have.length', 19)
+        cy.get('.item').should('have.length', 1)
       })
   
       // Since the API is external,
